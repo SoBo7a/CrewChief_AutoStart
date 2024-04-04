@@ -30,8 +30,8 @@ Before using CrewChief Auto Start, ensure you have the following:
 ## Configuration
 The config.xml file contains the configuration settings for CrewChief Auto Start. Here's how to configure it:
 
-- ```xml<crewChiefPath>```: Specify the path to the CrewChief executable.
-- ```xml<games>```: Define the list of supported racing simulations. Each game entry should include the simulation name (<name>) and the path to its main executable (<path>).
+- ```<crewChiefPath>```: Specify the path to the CrewChief executable.
+- ```<games>```: Define the list of supported racing simulations. Each game entry should include the simulation name (<name>) and the path to its main executable (<path>).
 
 ## Example Configuration
 ```xml
