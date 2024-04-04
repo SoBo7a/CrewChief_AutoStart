@@ -1,0 +1,21 @@
+﻿<config>
+	<!-- Specify the path to the CrewChief executable -->
+	<crewChiefPath>C:\Program Files (x86)\Britton IT Ltd\CrewChiefV4\CrewChiefV4.exe</crewChiefPath>
+
+	<!-- Define the list of games/simulations -->
+	<games>
+		<game>
+			<!-- Name of the simulation -->
+			<name>iRacing</name>
+
+			<!-- Path to the main executable of the simulation -->
+			<path>D:\Games\iRacing\ui\iracingui.exe</path>
+		</game>
+
+		<!-- Full example -->
+		<game>
+			<name>AssettoCorsa_64BIT</name>
+			<path>D:\Games\Assetto Corsa\AC64.exe</path>
+		</game>
+	</games>
+</config>
