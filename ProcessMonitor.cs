@@ -39,7 +39,8 @@ public static class ProcessMonitor
                 Thread.Sleep(25000); // Give iRacing some time to load up before starting CC
                 Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Starting CrewChief...");
                 GameManager.PrintSeparator();
-                GameLauncher.StartProcess(crewChiefPath);
+                string crewChiefArgs = CrewChiefArgumentResolver.GetCrewChiefArgs("iRacing");
+                GameLauncher.StartProcess(crewChiefPath, crewChiefArgs);
 
                 Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Waiting for Session to end...");
                 GameManager.PrintSeparator();
