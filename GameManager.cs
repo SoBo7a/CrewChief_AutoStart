@@ -38,7 +38,7 @@
         if (games.Count == 1)
         {
             AppLauncher.LaunchApps(apps);
-            GameLauncher.LaunchGame(games[0], crewChiefPath);
+            GameLauncher.LaunchGame(games[0], crewChiefPath, apps);
         }
         else
         {

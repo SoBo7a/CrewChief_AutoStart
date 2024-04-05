@@ -27,6 +27,9 @@
 
 			<!-- Path to the executable of the application -->
 			<path>C:\Program Files\racelabs\racelabs.exe</path>
+
+			<!-- Optional: Specifies whether the application should be automatically closed when the game/simulation ends (default is true) -->
+			<autoClose>false</autoClose>
 		</app>
 
 		<!-- Add more apps as needed -->

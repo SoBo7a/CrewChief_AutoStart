@@ -22,7 +22,7 @@
             GameManager.PrintSeparator();
             AppLauncher.LaunchApps(apps);
         }
-        GameLauncher.LaunchGame(games[choice - 1], crewChiefPath);
+        GameLauncher.LaunchGame(games[choice - 1], crewChiefPath, apps);
     }
 
     public static ConsoleKeyInfo ReadKey()

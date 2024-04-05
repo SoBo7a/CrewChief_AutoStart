@@ -1,19 +1,37 @@
 ﻿<config>
+	<!-- Specify the path to the CrewChief executable -->
 	<crewChiefPath>C:\Program Files (x86)\Britton IT Ltd\CrewChiefV4\CrewChiefV4.exe</crewChiefPath>
+
+	<!-- Define the list of games/simulations -->
 	<games>
 		<game>
+			<!-- Name of the simulation -->
 			<name>iRacing</name>
+
+			<!-- Path to the main executable of the simulation -->
 			<path>D:\Games\iRacing\ui\iracingui.exe</path>
 		</game>
+
+		<!-- Full example -->
 		<game>
 			<name>AssettoCorsa_64BIT</name>
-			<path>C:\Users\leon_\Desktop\Games\Simulationen\Assetto Corsa\Content Manager.exe</path>
+			<path>D:\Games\Assetto Corsa\AC64.exe</path>
 		</game>
 	</games>
+
+	<!-- Define the list of additional applications -->
 	<apps>
 		<app>
+			<!-- Name of the application -->
 			<name>Racelabs</name>
-			<path>C:\Users\leon_\AppData\Local\racelabapps\RacelabApps.exe</path>
+
+			<!-- Path to the executable of the application -->
+			<path>C:\Program Files\racelabs\racelabs.exe</path>
+
+			<!-- Optional: Specifies whether the application should be automatically closed when the game/simulation ends (default is true) -->
+			<autoClose>false</autoClose>
 		</app>
+
+		<!-- Add more apps as needed -->
 	</apps>
 </config>

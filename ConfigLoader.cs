@@ -37,7 +37,13 @@ public static class ConfigLoader
             {
                 string name = appNode.SelectSingleNode("name").InnerText;
                 string path = appNode.SelectSingleNode("path").InnerText;
-                apps.Add(new AppInfo { Name = name, Path = path });
+                bool autoClose = true; // AutoClose apps by default
+                XmlNode autoCloseNode = appNode.SelectSingleNode("autoClose");
+                if (autoCloseNode != null && bool.TryParse(autoCloseNode.InnerText, out bool autoCloseValue))
+                {
+                    autoClose = autoCloseValue;
+                }
+                apps.Add(new AppInfo { Name = name, Path = path, AutoClose = autoClose });
             }
         }
         catch (Exception ex)

@@ -2,7 +2,7 @@
 
 public static class GameLauncher
 {
-    public static void LaunchGame(GameInfo game, string crewChiefPath)
+    public static void LaunchGame(GameInfo game, string crewChiefPath, List<AppInfo> apps)
     {
         string crewChiefArgs = CrewChiefArgumentResolver.GetCrewChiefArgs(game.Name);
 
@@ -24,7 +24,7 @@ public static class GameLauncher
         }
 
         // Start monitoring processes
-        ProcessMonitor.MonitorProcesses(crewChiefPath, game);
+        ProcessMonitor.MonitorProcesses(crewChiefPath, game, apps);
     }
 
     public static void StartProcess(string fileName, string arguments = "")

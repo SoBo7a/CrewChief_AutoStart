@@ -20,7 +20,21 @@ public static class ProcessMonitor
         return processes.Length > 0;
     }
 
-    public static void MonitorProcesses(string crewChiefPath, GameInfo game)
+    private static bool IsGameRunning(GameInfo game)
+    {
+        string exeName = Path.GetFileNameWithoutExtension(game.Path);
+        Process[] processes = Process.GetProcessesByName(exeName);
+        return processes.Length > 0;
+    }
+
+    private static bool IsAppRunning(AppInfo app)
+    {
+        string exeName = Path.GetFileNameWithoutExtension(app.Path);
+        Process[] processes = Process.GetProcessesByName(exeName);
+        return processes.Length > 0;
+    }
+
+    public static void MonitorProcesses(string crewChiefPath, GameInfo game, List<AppInfo> apps)
     {
         bool iracingSessionInProgress = false;
 
@@ -59,7 +73,7 @@ public static class ProcessMonitor
                 iracingSessionInProgress = false; // Reset iRacing session flag
             }
 
-            Thread.Sleep(5000); // Check every 5 seconds
+            Thread.Sleep(500); // Check every 500 milliseconds
         }
 
         // Monitor the selected game
@@ -77,14 +91,22 @@ public static class ProcessMonitor
                 }
             }
 
-            Thread.Sleep(5000); // Check every 5 seconds
+            Thread.Sleep(500); // Check every 500 milliseconds
         }
-    }
 
-    private static bool IsGameRunning(GameInfo game)
-    {
-        string exeName = Path.GetFileNameWithoutExtension(game.Path);
-        Process[] processes = Process.GetProcessesByName(exeName);
-        return processes.Length > 0;
+        // Check and close associated apps
+        foreach (var app in apps)
+        {
+            if (app.AutoClose && !IsGameRunning(game) && IsAppRunning(app))
+            {
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Closing {app.Name}...");
+                GameManager.PrintSeparator();
+                Process[] processes = Process.GetProcessesByName(Path.GetFileNameWithoutExtension(app.Path));
+                foreach (Process process in processes)
+                {
+                    process.Kill();
+                }
+            }
+        }
     }
 }
