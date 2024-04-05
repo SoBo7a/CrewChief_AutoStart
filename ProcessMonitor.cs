@@ -20,45 +20,71 @@ public static class ProcessMonitor
         return processes.Length > 0;
     }
 
-    public static void MonitorProcesses(string crewChiefPath)
+    public static void MonitorProcesses(string crewChiefPath, GameInfo game)
     {
-        bool sessionInProgress = false;
+        bool iracingSessionInProgress = false;
 
+        // Specific handling in case iracingui.exe is used, in order to start crewchief only on active sessions and stop afterwards
         while (IsIRacingUIRunning())
         {
-            if (!sessionInProgress)
+            if (!iracingSessionInProgress)
             {
-                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Waiting for Session...");
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Waiting for iRacing Session...");
                 GameManager.PrintSeparator();
-                sessionInProgress = true;
+                iracingSessionInProgress = true;
             }
 
             if (IsIRacingRunning() && !IsCrewChiefRunning())
             {
-                // Start CrewChief
+                // Start CrewChief for iRacing
                 Thread.Sleep(25000); // Give iRacing some time to load up before starting CC
-                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Starting CrewChief...");
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Starting CrewChief for iRacing...");
                 GameManager.PrintSeparator();
                 string crewChiefArgs = CrewChiefArgumentResolver.GetCrewChiefArgs("iRacing");
                 GameLauncher.StartProcess(crewChiefPath, crewChiefArgs);
 
-                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Waiting for Session to end...");
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Waiting for iRacing Session to end...");
                 GameManager.PrintSeparator();
             }
             else if (!IsIRacingRunning() && IsCrewChiefRunning())
             {
-                // iRacing closed, so close CrewChief if running
-                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Closing CrewChief...");
+                // iRacing session closed, so close CrewChief if running
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Closing CrewChief for iRacing...");
                 GameManager.PrintSeparator();
                 Process[] processes = Process.GetProcessesByName("CrewChiefV4");
                 foreach (Process process in processes)
                 {
                     process.Kill();
                 }
-                sessionInProgress = false; // Reset session flag
+                iracingSessionInProgress = false; // Reset iRacing session flag
             }
 
             Thread.Sleep(5000); // Check every 5 seconds
         }
+
+        // Monitor the selected game
+        while (IsGameRunning(game) || IsCrewChiefRunning())
+        {
+            if (!IsGameRunning(game) && IsCrewChiefRunning())
+            {
+                // Game session closed, so close CrewChief if running
+                Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Closing CrewChief for {game.Name}...");
+                GameManager.PrintSeparator();
+                Process[] processes = Process.GetProcessesByName("CrewChiefV4");
+                foreach (Process process in processes)
+                {
+                    process.Kill();
+                }
+            }
+
+            Thread.Sleep(5000); // Check every 5 seconds
+        }
+    }
+
+    private static bool IsGameRunning(GameInfo game)
+    {
+        string exeName = Path.GetFileNameWithoutExtension(game.Path);
+        Process[] processes = Process.GetProcessesByName(exeName);
+        return processes.Length > 0;
     }
 }

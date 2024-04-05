@@ -15,10 +15,16 @@ public static class GameLauncher
         if (game.Name != "iRacing")
         {
             Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Starting CrewChief...");
+            GameManager.PrintSeparator();
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Waiting for Simulator to exit...");
+            GameManager.PrintSeparator();
 
             System.Threading.Thread.Sleep(10000); // Add startup delay for CrewChief 
             StartProcess(crewChiefPath, crewChiefArgs);
         }
+
+        // Start monitoring processes
+        ProcessMonitor.MonitorProcesses(crewChiefPath, game);
     }
 
     public static void StartProcess(string fileName, string arguments = "")

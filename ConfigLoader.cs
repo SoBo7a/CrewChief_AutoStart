@@ -1,11 +1,14 @@
-﻿using System.Xml;
+﻿using System;
+using System.Collections.Generic;
+using System.Xml;
 
 public static class ConfigLoader
 {
-    public static (string, List<GameInfo>) LoadConfigFromXml(string configFile)
+    public static (string, List<GameInfo>, List<AppInfo>) LoadConfigFromXml(string configFile)
     {
         string crewChiefPath = "";
         List<GameInfo> games = new List<GameInfo>();
+        List<AppInfo> apps = new List<AppInfo>();
 
         try
         {
@@ -27,12 +30,21 @@ public static class ConfigLoader
                 string path = gameNode.SelectSingleNode("path").InnerText;
                 games.Add(new GameInfo { Name = name, Path = path });
             }
+
+            // Read app configurations
+            XmlNodeList appNodes = xmlDoc.SelectNodes("/config/apps/app");
+            foreach (XmlNode appNode in appNodes)
+            {
+                string name = appNode.SelectSingleNode("name").InnerText;
+                string path = appNode.SelectSingleNode("path").InnerText;
+                apps.Add(new AppInfo { Name = name, Path = path });
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error loading config file: {ex.Message}");
         }
 
-        return (crewChiefPath, games);
+        return (crewChiefPath, games, apps);
     }
 }

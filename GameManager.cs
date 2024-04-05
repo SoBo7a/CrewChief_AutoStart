@@ -2,7 +2,7 @@
 {
     public static void Start()
     {
-        (string crewChiefPath, List<GameInfo> games) = ConfigLoader.LoadConfigFromXml("config.xml");
+        (string crewChiefPath, List<GameInfo> games, List<AppInfo> apps) = ConfigLoader.LoadConfigFromXml("config.xml");
 
         // Check if CrewChief path exists
         if (string.IsNullOrEmpty(crewChiefPath) || !File.Exists(crewChiefPath))
@@ -23,18 +23,27 @@
             }
         }
 
+        // Check if app paths exist
+        foreach (var app in apps)
+        {
+            if (!File.Exists(app.Path))
+            {
+                Console.WriteLine($"App path specified for '{app.Name}' in the config file is invalid or not found.");
+                UserInput.WaitForUserInput();
+                return;
+            }
+        }
+
         // If only one game exists in config, start it automatically
         if (games.Count == 1)
         {
+            AppLauncher.LaunchApps(apps);
             GameLauncher.LaunchGame(games[0], crewChiefPath);
         }
         else
         {
-            UserInput.SelectGameToLaunch(games, crewChiefPath);
+            UserInput.SelectGameToLaunch(games, crewChiefPath, apps);
         }
-
-        // Start monitoring processes
-        ProcessMonitor.MonitorProcesses(crewChiefPath);
     }
 
     public static void PrintSeparator()

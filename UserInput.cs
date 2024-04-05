@@ -1,6 +1,6 @@
 ﻿public static class UserInput
 {
-    public static void SelectGameToLaunch(List<GameInfo> games, string crewChiefPath)
+    public static void SelectGameToLaunch(List<GameInfo> games, string crewChiefPath, List<AppInfo> apps)
     {
         Console.WriteLine("Select a sim to launch: \n");
         for (int i = 0; i < games.Count; i++)
@@ -16,6 +16,12 @@
             Console.WriteLine("\nInvalid input. Please enter a number corresponding to the sim you want to launch:");
         }
 
+        if (apps.Count > 0)
+        {
+            Console.WriteLine($"[{DateTime.Now:HH:mm:ss:fff}] Starting Apps...");
+            GameManager.PrintSeparator();
+            AppLauncher.LaunchApps(apps);
+        }
         GameLauncher.LaunchGame(games[choice - 1], crewChiefPath);
     }
 
