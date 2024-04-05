@@ -51,12 +51,12 @@ The config.xml file contains the configuration settings for CrewChief Auto Start
 		</game>
 	</games>
 	<apps>
-        <app>
-            <name>Racelabs</name>
-            <path>C:\Program Files\racelabs\racelabs.exe</path>
-            <autoClose>false</autoClose>
-        </app>
-    </apps>
+		<app>
+			<name>Racelabs</name>
+			<path>C:\Program Files\racelabs\racelabs.exe</path>
+			<autoClose>false</autoClose>
+		</app>
+	</apps>
 </config>
 ```
 
