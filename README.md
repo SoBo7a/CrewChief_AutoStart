@@ -22,7 +22,7 @@ Before using CrewChief Auto Start, ensure you have the following:
 
 ## Usage
 1. Open the config.xml file located in the application directory.
-2. Specify the path to the CrewChief executable (<crewChiefPath>) and the details of your racing simulations (<games>).
+2. Specify the path to the CrewChief executable (```<crewChiefPath>```) and the details of your racing simulations (```<games>```).
 3. Save the config.xml file.
 4. Double-click CrewChiefAutoStart.exe to launch the application.
 5. If multiple racing simulations are configured, you'll be prompted to select the simulation you want to launch.
@@ -32,9 +32,9 @@ Before using CrewChief Auto Start, ensure you have the following:
 The config.xml file contains the configuration settings for CrewChief Auto Start. Here's how to configure it:
 
 - ```<crewChiefPath>```: Specify the path to the CrewChief executable.
-- ```<games>```: Define the list of supported racing simulations. Each game entry should include the simulation name (<name>) and the path to its main executable (<path>).
-- ```<apps>```: Define the list of additional applications. Each app entry should include the application name (<name>), the path to its executable (<path>), 	
- 				and an optional autoClose property (<autoClose>), which specifies whether the application should be automatically closed when the game/simulation ends.
+- ```<games>```: Define the list of supported racing simulations. Each game entry should include the simulation name (```<name>```) and the path to its main executable (```<path>```).
+- ```<apps>```: Define the list of additional applications. Each app entry should include the application name (```<name>```), the path to its executable (```<path>```), 	
+ 				and an optional autoClose property (```<autoClose>```), which specifies whether the application should be automatically closed when the game/simulation ends.
 
 ## Example Configuration
 ```xml
