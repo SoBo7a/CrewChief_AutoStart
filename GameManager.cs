@@ -1,6 +1,6 @@
 ﻿public static class GameManager
 {
-    public static void Start()
+    public static void Start(string[] args)
     {
         (string crewChiefPath, List<GameInfo> games, List<AppInfo> apps) = ConfigLoader.LoadConfigFromXml("config.xml");
 
@@ -17,7 +17,7 @@
         {
             if (!File.Exists(game.Path))
             {
-                Console.WriteLine($"Game path specified for '{game.Name}' in the config file is invalid or not found.");
+                Console.WriteLine($"[ERROR] Game path specified for '{game.Name}' in the config file is invalid or not found.");
                 UserInput.WaitForUserInput();
                 return;
             }
@@ -28,7 +28,7 @@
         {
             if (!File.Exists(app.Path))
             {
-                Console.WriteLine($"App path specified for '{app.Name}' in the config file is invalid or not found.");
+                Console.WriteLine($"[ERROR] App path specified for '{app.Name}' in the config file is invalid or not found.");
                 UserInput.WaitForUserInput();
                 return;
             }
@@ -39,6 +39,33 @@
         {
             AppLauncher.LaunchApps(apps);
             GameLauncher.LaunchGame(games[0], crewChiefPath, apps);
+        }
+        else if (args.Length > 0)
+        {
+            if (args.Length < 2 || args[0] != "-game")
+            {
+                Console.WriteLine("[ERROR] Invalid arguments. Please provide a valid game name using the '-game' argument.");
+                PrintSeparator();
+                UserInput.SelectGameToLaunch(games, crewChiefPath, apps);
+                return;
+            }
+
+            string gameName = args[1];
+            string crewChiefArgs = CrewChiefArgumentResolver.GetCrewChiefArgs(gameName);
+
+            if (!string.IsNullOrEmpty(crewChiefArgs))
+            {
+                GameInfo selectedGame = games.Find(g => g.Name.Equals(gameName, StringComparison.OrdinalIgnoreCase));
+  
+                AppLauncher.LaunchApps(apps);
+                GameLauncher.LaunchGame(selectedGame, crewChiefPath, apps);
+            }
+            else
+            {
+                Console.WriteLine($"[ERROR] Unsupported game specified in arguments: '{gameName}'.");
+                PrintSeparator();
+                UserInput.SelectGameToLaunch(games, crewChiefPath, apps);
+            }
         }
         else
         {

@@ -8,6 +8,7 @@ It simplifies the process of starting CrewChief and launching your racing games/
 - Start and stop any other third party apps neccesary for your racing experience automatically with the simulation, by adding them to the configuration.
 - Easy configuration through an XML file.
 - Support for various racing simulations, including iRacing, Assetto Corsa, rFactor and more.
+- Command line argument support for launching specific games without user input.
 
 ## Prerequisites
 Before using CrewChief Auto Start, ensure you have the following:
@@ -27,6 +28,7 @@ Before using CrewChief Auto Start, ensure you have the following:
 4. Double-click CrewChiefAutoStart.exe to launch the application.
 5. If multiple racing simulations are configured, you'll be prompted to select the simulation you want to launch.
 6. The application will automatically monitor the status of the racing simulation and start/stop CrewChief and your apps accordingly.
+7. To directly start a specific game without user input, use the following command line argument: ```-game <gameName>```, where ```<gameName>``` is the name of the game configured in the XML (see list of possibilities below).
 
 ## Configuration
 The config.xml file contains the configuration settings for CrewChief Auto Start. Here's how to configure it:
