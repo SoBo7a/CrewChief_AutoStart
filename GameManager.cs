@@ -57,6 +57,14 @@
             {
                 GameInfo selectedGame = games.Find(g => g.Name.Equals(gameName, StringComparison.OrdinalIgnoreCase));
   
+                if (selectedGame == null)
+                {
+                    Console.WriteLine($"[ERROR] No configuration found for: '{gameName}'.");
+                    PrintSeparator();
+                    UserInput.SelectGameToLaunch(games, crewChiefPath, apps);
+                    return;
+                }
+
                 AppLauncher.LaunchApps(apps);
                 GameLauncher.LaunchGame(selectedGame, crewChiefPath, apps);
             }
